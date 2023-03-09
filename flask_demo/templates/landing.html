@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Healathon Demo</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {background-color: #f2f2f2;}
+
+        td:last-child {
+            background-color: yellow;
+        }
+    </style>
+</head>
+<body>
+    <h1>Healathon Demo</h1>
+
+    <h4>Upload a CSV file containing patient data formatted for Model prediction</h4>
+    <form method="POST" enctype="multipart/form-data">
+        <input type="file" name="file" accept=".csv">
+        <input type="submit" value="Upload">
+    </form>
+    {% if file_data_df is not none %}
+        <h2>Contents of the uploaded CSV file:</h2>
+        <table>
+            <thead>
+                <tr>
+                    {% for column in file_data_df.columns %}
+                        <th>{{ column }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for index, row in file_data_df.iterrows() %}
+                    <tr>
+                        {% for cell in row %}
+                            <td>{{ cell }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+</body>
+</html>
